@@ -1,0 +1,61 @@
+pipeline:
+  name: HelloWorld
+  identifier: HelloWorld
+  projectIdentifier: PRCHECKS
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: HelloWorld
+        repoName: HelloWorld
+        build: <+input>
+  stages:
+    - stage:
+        name: HelloWorld
+        identifier: HelloWorld
+        type: CI
+        spec:
+          cloneCodebase: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.harnessosslarge
+              namespace: harness-pr-checks
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run
+                  identifier: Run
+                  spec:
+                    connectorRef: gcpplatform
+                    image: <+pipeline.variables.JDK_IMAGE>
+                    shell: Sh
+                    command: echo "Hello"
+              - step:
+                  type: Run
+                  name: Build_step
+                  identifier: Build_step
+                  spec:
+                    connectorRef: gcpplatform
+                    image: <+pipeline.variables.JDK_IMAGE>
+                    shell: Sh
+                    command: echo "Hello"
+              - step:
+                  type: Run
+                  name: test
+                  identifier: test
+                  spec:
+                    connectorRef: gcpplatform
+                    image: <+pipeline.variables.JDK_IMAGE>
+                    shell: Sh
+                    command: echo "hello"
+  variables:
+    - name: JDK_IMAGE
+      type: String
+      description: ""
+      value: us.gcr.io/platform-205701/ubi/cie-agents/java-go-cie-agent:latest
