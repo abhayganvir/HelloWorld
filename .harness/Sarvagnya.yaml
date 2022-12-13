@@ -1,0 +1,30 @@
+pipeline:
+  name: Prcheck
+  identifier: Prcheck
+  projectIdentifier: PrCheckTemplate
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: s
+        identifier: s
+        description: ""
+        type: Approval
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: ShellScript
+                  name: Shell Script
+                  identifier: ShellScript
+                  spec:
+                    shell: Bash
+                    onDelegate: true
+                    source:
+                      type: Inline
+                      spec:
+                        script: echo hello
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
+        tags: {}
