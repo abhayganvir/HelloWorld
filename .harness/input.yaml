@@ -1,0 +1,14 @@
+inputSet:
+  identifier: "myinput"
+  name: "myinput"
+  orgIdentifier: "default"
+  projectIdentifier: "PRCHECKS"
+  pipeline:
+    identifier: "HelloWorld"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "PR"
+            spec:
+              number: "<+trigger.prNumber>"
